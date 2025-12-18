@@ -114,7 +114,7 @@
                         <artifactId>mysql-connector-j</artifactId>
                         <version>8.1.0</version>
                         <scope>runtime</scope>
- </dependency>
+                    </dependency>
 
                 </dependencies>
             </plugin>
