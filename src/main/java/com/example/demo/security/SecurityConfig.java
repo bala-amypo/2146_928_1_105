@@ -25,15 +25,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-            .authorizeHttpRequests()
-            .requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/h2-console/**").permitAll()
             .anyRequest().authenticated()
-            .and()
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
+        )
+        .headers(headers -> headers.frameOptions(frame -> frame.disable()));
+
+    return http.build();
+}
+
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
