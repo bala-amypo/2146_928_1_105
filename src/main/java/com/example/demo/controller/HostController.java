@@ -16,13 +16,18 @@ public class HostController {
         this.hostRepository = hostRepository;
     }
 
+    @PostMapping
+    public HostEntity createHost(@RequestBody HostEntity host) {
+        return hostRepository.save(host);
+    }
+
     @GetMapping
     public List<HostEntity> getAllHosts() {
         return hostRepository.findAll();
     }
 
-    @PostMapping
-    public HostEntity createHost(@RequestBody HostEntity host) {
-        return hostRepository.save(host);
+    @GetMapping("/{id}")
+    public HostEntity getHost(@PathVariable Long id) {
+        return hostRepository.findById(id).orElseThrow();
     }
 }
