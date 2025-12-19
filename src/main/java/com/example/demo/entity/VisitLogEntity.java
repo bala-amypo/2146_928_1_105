@@ -18,32 +18,49 @@ public class VisitLogEntity {
 
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
-    private String purpose;
-    private Boolean accessGranted;
-    private Boolean alertSent = false;
-
-    @PrePersist
-    public void onCheckIn() {
-        checkInTime = LocalDateTime.now();
-    }
+    private boolean accessGranted;
 
     public Long getId() {
         return id;
+    }
+
+    public VisitorEntity getVisitor() {
+        return visitor;
+    }
+
+    public void setVisitor(VisitorEntity visitor) {
+        this.visitor = visitor;
+    }
+
+    public HostEntity getHost() {
+        return host;
+    }
+
+    public void setHost(HostEntity host) {
+        this.host = host;
+    }
+
+    public LocalDateTime getCheckInTime() {
+        return checkInTime;
+    }
+
+    public void setCheckInTime(LocalDateTime checkInTime) {
+        this.checkInTime = checkInTime;
     }
 
     public LocalDateTime getCheckOutTime() {
         return checkOutTime;
     }
 
-    public Boolean getAlertSent() {
-        return alertSent;
+    public void setCheckOutTime(LocalDateTime checkOutTime) {
+        this.checkOutTime = checkOutTime;
     }
 
-    public void setCheckOutTime(LocalDateTime time) {
-        this.checkOutTime = time;
+    public boolean isAccessGranted() {
+        return accessGranted;
     }
 
-    public void setAlertSent(Boolean alertSent) {
-        this.alertSent = alertSent;
+    public void setAccessGranted(boolean accessGranted) {
+        this.accessGranted = accessGranted;
     }
 }

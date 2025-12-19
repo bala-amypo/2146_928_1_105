@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 public class AppointmentEntity {
@@ -16,9 +15,7 @@ public class AppointmentEntity {
     @ManyToOne
     private HostEntity host;
 
-    private LocalDate appointmentDate;
-    private String purpose;
-    private String status = "SCHEDULED";
+    private String status;
 
     public Long getId() {
         return id;
@@ -28,11 +25,23 @@ public class AppointmentEntity {
         return visitor;
     }
 
+    public void setVisitor(VisitorEntity visitor) {
+        this.visitor = visitor;
+    }
+
     public HostEntity getHost() {
         return host;
     }
 
-    public LocalDate getAppointmentDate() {
-        return appointmentDate;
+    public void setHost(HostEntity host) {
+        this.host = host;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
