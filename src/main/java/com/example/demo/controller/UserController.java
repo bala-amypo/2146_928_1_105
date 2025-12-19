@@ -20,14 +20,6 @@ public class UserController {
     @PostMapping("/register")
     public UserEntity register(@RequestBody UserEntity user) {
 
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Email already exists");
-        }
-
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new RuntimeException("Username already exists");
-        }
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("USER");
 
