@@ -6,15 +6,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/auth")
 public class UserController {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @PostMapping("/register")
@@ -24,5 +23,10 @@ public class UserController {
         user.setRole("USER");
 
         return userRepository.save(user);
+    }
+
+    @PostMapping("/login")
+    public String login() {
+        return "Login successful (JWT not implemented)";
     }
 }
