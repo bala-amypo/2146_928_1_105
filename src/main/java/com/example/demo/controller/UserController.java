@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,24 +16,18 @@ public class UserController {
         this.userService = userService;
     }
 
-    // 🔹 Register new user
     @PostMapping
-    @Operation(summary = "Register a new user")
-    public User register(@RequestBody User user) {
+    public User registerUser(@RequestBody User user) {
         return userService.registerUser(user);
     }
 
-    // 🔹 Get user by ID
     @GetMapping("/{id}")
-    @Operation(summary = "Get user by ID")
-    public User getById(@PathVariable Long id) {
+    public User getUserById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
-    // 🔹 Get user by email
     @GetMapping("/email/{email}")
-    @Operation(summary = "Get user by email")
-    public User getByEmail(@PathVariable String email) {
+    public User getUserByEmail(@PathVariable String email) {
         return userService.findByEmail(email);
     }
 }
