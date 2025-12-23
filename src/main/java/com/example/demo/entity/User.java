@@ -1,28 +1,46 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_entity")
+@Table(
+    name = "users",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email"),
+        @UniqueConstraint(columnNames = "username")
+    }
+)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String username;
 
+    @Email
+    @NotBlank
     private String email;
 
+    @NotBlank
     private String password;
 
-    private String role;
+    private String role = "USER";
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
-    public UserEntity() {
+    // ✅ CORRECT: must be void
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = LocalDateTime.now();
     }
+
+    // ---------- Getters & Setters ----------
 
     public Long getId() {
         return id;
@@ -51,7 +69,7 @@ public class User {
     public String getPassword() {
         return password;
     }
-
+    
     public void setPassword(String password) {
         this.password = password;
     }
@@ -59,7 +77,7 @@ public class User {
     public String getRole() {
         return role;
     }
-
+    
     public void setRole(String role) {
         this.role = role;
     }
@@ -67,7 +85,7 @@ public class User {
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
-
+    
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
