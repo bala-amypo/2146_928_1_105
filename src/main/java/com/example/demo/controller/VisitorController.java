@@ -1,33 +1,35 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.VisitorEntity;
-import com.example.demo.repository.VisitorRepository;
+import com.example.demo.entity.Visitor;
+import com.example.demo.service.VisitorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/visitors")
+@Tag(name = "Visitors", description = "Visitor management APIs")
 public class VisitorController {
 
-    private final VisitorRepository visitorRepository;
+    private final VisitorService visitorService;
 
-    public VisitorController(VisitorRepository visitorRepository) {
-        this.visitorRepository = visitorRepository;
+    public VisitorController(VisitorService visitorService) {
+        this.visitorService = visitorService;
     }
 
     @PostMapping
-    public VisitorEntity createVisitor(@RequestBody VisitorEntity visitor) {
-        return visitorRepository.save(visitor);
+    public Visitor create(@RequestBody Visitor visitor) {
+        return visitorService.createVisitor(visitor);
     }
 
     @GetMapping
-    public List<VisitorEntity> getAllVisitors() {
-        return visitorRepository.findAll();
+    public List<Visitor> getAll() {
+        return visitorService.getAllVisitors();
     }
 
     @GetMapping("/{id}")
-    public VisitorEntity getVisitor(@PathVariable Long id) {
-        return visitorRepository.findById(id).orElseThrow();
+    public Visitor get(@PathVariable Long id) {
+        return visitorService.getVisitor(id);
     }
 }

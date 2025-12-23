@@ -1,47 +1,46 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
-public class AppointmentEntity {
+@Table(name = "appointments")
+public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private VisitorEntity visitor;
+    @JoinColumn(name = "visitor_id")
+    private Visitor visitor;
 
     @ManyToOne
-    private HostEntity host;
+    @JoinColumn(name = "host_id")
+    private Host host;
 
-    private String status;
+    private LocalDate appointmentDate;
 
-    public Long getId() {
-        return id;
-    }
+    private String purpose;
 
-    public VisitorEntity getVisitor() {
-        return visitor;
-    }
+    private String status = "SCHEDULED";
 
-    public void setVisitor(VisitorEntity visitor) {
-        this.visitor = visitor;
-    }
+    // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public HostEntity getHost() {
-        return host;
-    }
+    public Visitor getVisitor() { return visitor; }
+    public void setVisitor(Visitor visitor) { this.visitor = visitor; }
 
-    public void setHost(HostEntity host) {
-        this.host = host;
-    }
+    public Host getHost() { return host; }
+    public void setHost(Host host) { this.host = host; }
 
-    public String getStatus() {
-        return status;
-    }
+    public LocalDate getAppointmentDate() { return appointmentDate; }
+    public void setAppointmentDate(LocalDate appointmentDate) { this.appointmentDate = appointmentDate; }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public String getPurpose() { return purpose; }
+    public void setPurpose(String purpose) { this.purpose = purpose; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

@@ -1,33 +1,26 @@
-package com.example.demo.controller;
-
-import com.example.demo.entity.HostEntity;
-import com.example.demo.repository.HostRepository;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/hosts")
+@Tag(name = "Hosts", description = "Host management APIs")
 public class HostController {
 
-    private final HostRepository hostRepository;
+    private final HostService hostService;
 
-    public HostController(HostRepository hostRepository) {
-        this.hostRepository = hostRepository;
+    public HostController(HostService hostService) {
+        this.hostService = hostService;
     }
 
     @PostMapping
-    public HostEntity createHost(@RequestBody HostEntity host) {
-        return hostRepository.save(host);
+    public Host create(@RequestBody Host host) {
+        return hostService.createHost(host);
     }
 
     @GetMapping
-    public List<HostEntity> getAllHosts() {
-        return hostRepository.findAll();
+    public List<Host> getAll() {
+        return hostService.getAllHosts();
     }
 
     @GetMapping("/{id}")
-    public HostEntity getHost(@PathVariable Long id) {
-        return hostRepository.findById(id).orElseThrow();
+    public Host get(@PathVariable Long id) {
+        return hostService.getHost(id);
     }
 }

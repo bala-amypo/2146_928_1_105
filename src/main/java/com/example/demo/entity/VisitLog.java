@@ -4,63 +4,62 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class VisitLogEntity {
+@Table(name = "visit_logs")
+public class VisitLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private VisitorEntity visitor;
+    @JoinColumn(name = "visitor_id")
+    private Visitor visitor;
 
     @ManyToOne
-    private HostEntity host;
+    @JoinColumn(name = "host_id")
+    private Host host;
 
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
-    private boolean accessGranted;
+    private String purpose;
+    private Boolean accessGranted;
+    private Boolean alertSent = false;
 
-    public Long getId() {
-        return id;
+    @OneToOne(mappedBy = "visitLog")
+    private AlertNotification alertNotification;
+
+    @PrePersist
+    public void onCheckIn() {
+        this.checkInTime = LocalDateTime.now();
     }
 
-    public VisitorEntity getVisitor() {
-        return visitor;
-    }
+    // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setVisitor(VisitorEntity visitor) {
-        this.visitor = visitor;
-    }
+    public Visitor getVisitor() { return visitor; }
+    public void setVisitor(Visitor visitor) { this.visitor = visitor; }
 
-    public HostEntity getHost() {
-        return host;
-    }
+    public Host getHost() { return host; }
+    public void setHost(Host host) { this.host = host; }
 
-    public void setHost(HostEntity host) {
-        this.host = host;
-    }
+    public LocalDateTime getCheckInTime() { return checkInTime; }
+    public void setCheckInTime(LocalDateTime checkInTime) { this.checkInTime = checkInTime; }
 
-    public LocalDateTime getCheckInTime() {
-        return checkInTime;
-    }
+    public LocalDateTime getCheckOutTime() { return checkOutTime; }
+    public void setCheckOutTime(LocalDateTime checkOutTime) { this.checkOutTime = checkOutTime; }
 
-    public void setCheckInTime(LocalDateTime checkInTime) {
-        this.checkInTime = checkInTime;
-    }
+    public String getPurpose() { return purpose; }
+    public void setPurpose(String purpose) { this.purpose = purpose; }
 
-    public LocalDateTime getCheckOutTime() {
-        return checkOutTime;
-    }
+    public Boolean getAccessGranted() { return accessGranted; }
+    public void setAccessGranted(Boolean accessGranted) { this.accessGranted = accessGranted; }
 
-    public void setCheckOutTime(LocalDateTime checkOutTime) {
-        this.checkOutTime = checkOutTime;
-    }
+    public Boolean getAlertSent() { return alertSent; }
+    public void setAlertSent(Boolean alertSent) { this.alertSent = alertSent; }
 
-    public boolean isAccessGranted() {
-        return accessGranted;
-    }
-
-    public void setAccessGranted(boolean accessGranted) {
-        this.accessGranted = accessGranted;
+    public AlertNotification getAlertNotification() { return alertNotification; }
+    public void setAlertNotification(AlertNotification alertNotification) {
+        this.alertNotification = alertNotification;
     }
 }
