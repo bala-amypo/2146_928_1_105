@@ -8,6 +8,7 @@ import com.example.demo.service.AppointmentService;
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;

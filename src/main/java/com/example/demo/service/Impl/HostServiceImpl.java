@@ -4,10 +4,12 @@ import com.example.demo.entity.Host;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.HostRepository;
 import com.example.demo.service.HostService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class HostServiceImpl implements HostService {
+    
 
     private final HostRepository hostRepository;
 

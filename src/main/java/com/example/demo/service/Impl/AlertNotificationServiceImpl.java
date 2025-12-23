@@ -7,6 +7,7 @@ import com.example.demo.service.AlertNotificationService;
 
 import java.util.List;
 
+@Service
 public class AlertNotificationServiceImpl implements AlertNotificationService {
 
     private final AlertNotificationRepository alertRepository;
