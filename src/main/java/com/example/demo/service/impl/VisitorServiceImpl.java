@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service   // ✅ REQUIRED
+@Service
 public class VisitorServiceImpl implements VisitorService {
 
     private final VisitorRepository visitorRepository;
@@ -19,6 +19,10 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public Visitor createVisitor(Visitor visitor) {
+
+        // 🔒 FORCE CREATE MODE (VERY IMPORTANT)
+        visitor.setId(null);
+
         return visitorRepository.save(visitor);
     }
 
