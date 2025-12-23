@@ -17,7 +17,7 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
 
         Server server = new Server();
-        server.setUrl("https://9160.408procr.amypo.ai");
+        server.setUrl("/"); // ✅ IMPORTANT for Amypo proxy
         server.setDescription("Amypo Preview Server");
 
         SecurityScheme bearerScheme = new SecurityScheme()
@@ -27,7 +27,9 @@ public class SwaggerConfig {
 
         return new OpenAPI()
                 .servers(List.of(server))
-                .components(new Components().addSecuritySchemes("bearerAuth", bearerScheme))
-                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
+                .components(new Components()
+                        .addSecuritySchemes("bearerAuth", bearerScheme))
+                .addSecurityItem(new SecurityRequirement()
+                        .addList("bearerAuth"));
     }
 }
