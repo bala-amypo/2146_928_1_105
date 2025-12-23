@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -32,9 +33,11 @@ public class Host {
 
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "host")
     private List<Appointment> appointments;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "host")
     private List<VisitLog> visitLogs;
 
@@ -60,11 +63,4 @@ public class Host {
     public void setPhone(String phone) { this.phone = phone; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public List<Appointment> getAppointments() { return appointments; }
-    public void setAppointments(List<Appointment> appointments) { this.appointments = appointments; }
-
-    public List<VisitLog> getVisitLogs() { return visitLogs; }
-    public void setVisitLogs(List<VisitLog> visitLogs) { this.visitLogs = visitLogs; }
 }
