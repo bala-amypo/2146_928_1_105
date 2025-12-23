@@ -19,10 +19,8 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public Visitor createVisitor(Visitor visitor) {
-
-        // 🔒 FORCE CREATE MODE (VERY IMPORTANT)
-        visitor.setId(null);
-
+        // ❌ DO NOT TOUCH ID
+        // Hibernate will auto-generate it
         return visitorRepository.save(visitor);
     }
 
