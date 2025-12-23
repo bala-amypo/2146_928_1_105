@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "visitors")
+@JsonIgnoreProperties(
+        value = {"id", "createdAt"},
+        allowGetters = true
+)
 public class Visitor {
 
     @Id
@@ -30,12 +35,10 @@ public class Visitor {
 
     private LocalDateTime createdAt;
 
-    // 🔴 Prevent infinite recursion in Swagger / JSON
     @OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Appointment> appointments;
 
-    // 🔴 Prevent infinite recursion in Swagger / JSON
     @OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<VisitLog> visitLogs;
@@ -45,14 +48,10 @@ public class Visitor {
         this.createdAt = LocalDateTime.now();
     }
 
-    // ---------- Getters & Setters ----------
+    // -------- Getters & Setters --------
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFullName() {
@@ -89,25 +88,5 @@ public class Visitor {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
-
-    public List<VisitLog> getVisitLogs() {
-        return visitLogs;
-    }
-
-    public void setVisitLogs(List<VisitLog> visitLogs) {
-        this.visitLogs = visitLogs;
     }
 }
