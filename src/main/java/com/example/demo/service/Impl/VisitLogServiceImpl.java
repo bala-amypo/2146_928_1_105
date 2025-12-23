@@ -4,7 +4,7 @@ import com.example.demo.entity.*;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.*;
 import com.example.demo.service.VisitLogService;
-
+import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
