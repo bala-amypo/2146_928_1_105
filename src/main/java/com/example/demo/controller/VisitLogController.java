@@ -3,8 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.model.VisitLog;
 import com.example.demo.service.VisitLogService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,41 +18,27 @@ public class VisitLogController {
         this.visitLogService = visitLogService;
     }
 
-    /**
-     * CHECK-IN VISITOR
-     * Request body is plain String (purpose)
-     */
     @PostMapping("/checkin/{visitorId}/{hostId}")
-    public ResponseEntity<VisitLog> checkInVisitor(
+    public VisitLog checkInVisitor(
             @PathVariable Long visitorId,
             @PathVariable Long hostId,
             @RequestBody String purpose) {
 
-        VisitLog visitLog = visitLogService.checkInVisitor(visitorId, hostId, purpose);
-        return new ResponseEntity<>(visitLog, HttpStatus.CREATED);
+        return visitLogService.checkInVisitor(visitorId, hostId, purpose);
     }
 
-    /**
-     * CHECK-OUT VISITOR
-     */
     @PostMapping("/checkout/{visitLogId}")
-    public ResponseEntity<VisitLog> checkOutVisitor(@PathVariable Long visitLogId) {
-        return ResponseEntity.ok(visitLogService.checkOutVisitor(visitLogId));
+    public VisitLog checkOutVisitor(@PathVariable Long visitLogId) {
+        return visitLogService.checkOutVisitor(visitLogId);
     }
 
-    /**
-     * GET ALL ACTIVE VISITS
-     */
     @GetMapping("/active")
-    public ResponseEntity<List<VisitLog>> getActiveVisits() {
-        return ResponseEntity.ok(visitLogService.getActiveVisits());
+    public List<VisitLog> getActiveVisits() {
+        return visitLogService.getActiveVisits();
     }
 
-    /**
-     * GET VISIT BY ID
-     */
     @GetMapping("/{id}")
-    public ResponseEntity<VisitLog> getVisitLog(@PathVariable Long id) {
-        return ResponseEntity.ok(visitLogService.getVisitLog(id));
+    public VisitLog getVisitLog(@PathVariable Long id) {
+        return visitLogService.getVisitLog(id);
     }
 }
