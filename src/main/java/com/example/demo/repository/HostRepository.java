@@ -1,11 +1,10 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.Host;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.*;
 
-import java.util.Optional;
-
-public interface HostRepository extends JpaRepository<Host, Long> {
-
+public interface HostRepository {
+    Host save(Host h);
+    Optional<Host> findById(Long id);
     Optional<Host> findByEmail(String email);
 }

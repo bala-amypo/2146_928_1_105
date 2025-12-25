@@ -1,7 +1,10 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.Visitor;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.*;
 
-public interface VisitorRepository extends JpaRepository<Visitor, Long> {
+public interface VisitorRepository {
+    Visitor save(Visitor v);
+    Optional<Visitor> findById(Long id);
+    List<Visitor> findAll();
 }
