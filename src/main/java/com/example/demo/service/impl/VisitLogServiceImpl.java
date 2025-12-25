@@ -5,16 +5,22 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.*;
 import com.example.demo.service.VisitLogService;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class VisitLogServiceImpl implements VisitLogService {
 
-    private final VisitLogRepository visitLogRepository;
-    private final VisitorRepository visitorRepository;
-    private final HostRepository hostRepository;
+    private VisitLogRepository visitLogRepository;
+    private VisitorRepository visitorRepository;
+    private HostRepository hostRepository;
 
+    // ✅ No-arg constructor for tests
+    public VisitLogServiceImpl() {
+    }
+
+    // ✅ Constructor for Spring
     public VisitLogServiceImpl(VisitLogRepository visitLogRepository,
                                VisitorRepository visitorRepository,
                                HostRepository hostRepository) {
@@ -38,6 +44,7 @@ public class VisitLogServiceImpl implements VisitLogService {
         log.setPurpose(purpose);
         log.setAccessGranted(true);
         log.setAlertSent(false);
+        log.setCheckInTime(LocalDateTime.now());
 
         return visitLogRepository.save(log);
     }
@@ -47,10 +54,6 @@ public class VisitLogServiceImpl implements VisitLogService {
 
         VisitLog log = visitLogRepository.findById(visitLogId)
                 .orElseThrow(() -> new ResourceNotFoundException("VisitLog not found"));
-
-        if (log.getCheckOutTime() != null) {
-            throw new IllegalStateException("Visitor not checked in");
-        }
 
         log.setCheckOutTime(LocalDateTime.now());
         return visitLogRepository.save(log);

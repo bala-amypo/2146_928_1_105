@@ -11,16 +11,19 @@ import java.util.List;
 @Service
 public class VisitorServiceImpl implements VisitorService {
 
-    private final VisitorRepository visitorRepository;
+    private VisitorRepository visitorRepository;
 
+    // ✅ No-arg constructor (REQUIRED FOR TESTS)
+    public VisitorServiceImpl() {
+    }
+
+    // ✅ Constructor for Spring
     public VisitorServiceImpl(VisitorRepository visitorRepository) {
         this.visitorRepository = visitorRepository;
     }
 
     @Override
     public Visitor createVisitor(Visitor visitor) {
-        // ❌ DO NOT TOUCH ID
-        // Hibernate will auto-generate it
         return visitorRepository.save(visitor);
     }
 
