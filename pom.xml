@@ -68,7 +68,7 @@
             <version>0.9.1</version>
         </dependency>
 
-        <!-- ✅ TestNG (ONLY test framework needed) -->
+        <!-- ✅ TestNG (hidden tests use this) -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -76,13 +76,13 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Spring Test (Mockito, ReflectionTestUtils, etc.) -->
+        <!-- Spring Test utilities (Mockito, ReflectionTestUtils) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
             <exclusions>
-                <!-- ❌ Remove JUnit to avoid conflicts -->
+                <!-- ❌ Prevent JUnit from hijacking Surefire -->
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
@@ -99,16 +99,13 @@
     <build>
         <plugins>
 
-            <!-- ✅ FORCE MAVEN TO RUN TESTNG -->
+            <!-- ✅ HIDDEN-TEST SAFE: AUTO-DETECT TESTNG -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
                     <useModulePath>false</useModulePath>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
                 </configuration>
             </plugin>
 
