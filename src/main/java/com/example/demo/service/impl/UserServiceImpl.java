@@ -9,20 +9,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
 
+    // ✅ No-arg constructor
+    public UserServiceImpl() {
+    }
+
+    // ✅ Spring constructor
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public User registerUser(User user) {
-
-        // default role
         if (user.getRole() == null) {
             user.setRole("USER");
         }
-
         return userRepository.save(user);
     }
 

@@ -13,46 +13,34 @@ public class HostServiceImpl implements HostService {
 
     private HostRepository hostRepository;
 
-    // No-args constructor for test compatibility
+    // ✅ No-arg constructor for tests
     public HostServiceImpl() {
     }
 
-    // Constructor for normal dependency injection
+    // ✅ Spring constructor
     public HostServiceImpl(HostRepository hostRepository) {
         this.hostRepository = hostRepository;
     }
 
     @Override
     public Host createHost(Host host) {
-        if (hostRepository == null) {
-            throw new IllegalStateException("HostRepository not initialized");
-        }
         return hostRepository.save(host);
     }
 
     @Override
     public Host getHost(Long id) {
-        if (hostRepository == null) {
-            throw new IllegalStateException("HostRepository not initialized");
-        }
         return hostRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Host not found"));
     }
 
     @Override
     public Host getHostByEmail(String email) {
-        if (hostRepository == null) {
-            throw new IllegalStateException("HostRepository not initialized");
-        }
         return hostRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Host not found"));
     }
 
     @Override
     public List<Host> getAllHosts() {
-        if (hostRepository == null) {
-            throw new IllegalStateException("HostRepository not initialized");
-        }
         return hostRepository.findAll();
     }
 }

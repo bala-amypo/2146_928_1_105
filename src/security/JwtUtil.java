@@ -3,12 +3,10 @@ package com.example.demo.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.security.Keys;
 
-import java.util.Date;
 import java.security.Key;
-
-import javax.crypto.spec.SecretKeySpec;
+import java.util.Date;
 
 public class JwtUtil {
 
@@ -16,20 +14,14 @@ public class JwtUtil {
     private String secret;
     private long jwtExpirationMs;
 
-    // No-arg constructor REQUIRED
     public JwtUtil() {
     }
 
-    // =========================
-    // GENERATE JWT TOKEN
-    // =========================
-    public String generateToken(String username, String role, Long userId, String email) {
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes());
+    }
 
-        byte[] keyBytes = secret.getBytes();
-        Key key = new SecretKeySpec(
-                keyBytes,
-                SignatureAlgorithm.HS256.getJcaName()
-        );
+    public String generateToken(String username, String role, Long userId, String email) {
 
         return Jwts.builder()
                 .setSubject(username)
@@ -37,27 +29,14 @@ public class JwtUtil {
                 .claim("userId", userId)
                 .claim("email", email)
                 .setIssuedAt(new Date())
-                .setExpiration(
-                        new Date(System.currentTimeMillis() + jwtExpirationMs)
-                )
-                .signWith(key, SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // =========================
-    // VALIDATE TOKEN & GET CLAIMS
-    // =========================
-    public io.jsonwebtoken.Jws<Claims> validateAndGetClaims(String token)
-            throws JwtException {
-
-        byte[] keyBytes = secret.getBytes();
-        Key key = new SecretKeySpec(
-                keyBytes,
-                SignatureAlgorithm.HS256.getJcaName()
-        );
-
+    public io.jsonwebtoken.Jws<Claims> validateAndGetClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(key)
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token);
     }

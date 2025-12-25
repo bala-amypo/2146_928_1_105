@@ -5,14 +5,20 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.*;
 import com.example.demo.service.AlertNotificationService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class AlertNotificationServiceImpl implements AlertNotificationService {
 
-    private final AlertNotificationRepository alertRepository;
-    private final VisitLogRepository visitLogRepository;
+    private AlertNotificationRepository alertRepository;
+    private VisitLogRepository visitLogRepository;
 
+    // ✅ No-arg constructor
+    public AlertNotificationServiceImpl() {
+    }
+
+    // ✅ Spring constructor
     public AlertNotificationServiceImpl(AlertNotificationRepository alertRepository,
                                         VisitLogRepository visitLogRepository) {
         this.alertRepository = alertRepository;

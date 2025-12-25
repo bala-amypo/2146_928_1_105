@@ -5,16 +5,22 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.*;
 import com.example.demo.service.AppointmentService;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 
-    private final AppointmentRepository appointmentRepository;
-    private final VisitorRepository visitorRepository;
-    private final HostRepository hostRepository;
+    private AppointmentRepository appointmentRepository;
+    private VisitorRepository visitorRepository;
+    private HostRepository hostRepository;
 
+    // ✅ No-arg constructor
+    public AppointmentServiceImpl() {
+    }
+
+    // ✅ Spring constructor
     public AppointmentServiceImpl(AppointmentRepository appointmentRepository,
                                   VisitorRepository visitorRepository,
                                   HostRepository hostRepository) {
