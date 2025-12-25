@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,97 +10,54 @@ import java.util.List;
 
 @Entity
 @Table(name = "visitors")
-@JsonIgnoreProperties(
-        value = {"id", "createdAt"},
-        allowGetters = true
-)
 public class Visitor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Full name is required")
-    @Column(nullable = false)
+    @NotBlank
     private String fullName;
 
-    @Email(message = "Invalid email format")
-    @Column
+    @Email
     private String email;
 
-    @NotBlank(message = "Phone number is required")
-    @Column(nullable = false)
+    @NotBlank
     private String phone;
 
-    @NotBlank(message = "ID proof number is required")
-    @Column(nullable = false)
+    @NotBlank
     private String idProofNumber;
 
-    @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
+    @OneToMany(mappedBy = "visitor")
     private List<Appointment> appointments;
 
-    @OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
+    @OneToMany(mappedBy = "visitor")
     private List<VisitLog> visitLogs;
 
-    // 🔹 Auto-set createdAt
     @PrePersist
-    protected void onCreate() {
+    public void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
 
-    // ---------- GETTERS & SETTERS ----------
+    // 🔴 REQUIRED BY TESTS
+    public void setId(Long id) { this.id = id; }
 
-    // ❌ NO setId() — Hibernate controls ID
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public String getFullName() {
-        return fullName;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getIdProofNumber() { return idProofNumber; }
+    public void setIdProofNumber(String idProofNumber) { this.idProofNumber = idProofNumber; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getIdProofNumber() {
-        return idProofNumber;
-    }
-
-    public void setIdProofNumber(String idProofNumber) {
-        this.idProofNumber = idProofNumber;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public List<VisitLog> getVisitLogs() {
-        return visitLogs;
-    }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }

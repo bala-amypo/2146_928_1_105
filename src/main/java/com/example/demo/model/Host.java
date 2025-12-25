@@ -9,9 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "hosts", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
+@Table(name = "hosts", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Host {
 
     @Id
@@ -24,9 +22,6 @@ public class Host {
     @Email
     @NotBlank
     private String email;
-
-    @NotBlank
-    private String department;
 
     @NotBlank
     private String phone;
@@ -46,7 +41,6 @@ public class Host {
         this.createdAt = LocalDateTime.now();
     }
 
-    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -55,9 +49,6 @@ public class Host {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-
-    public String getDepartment() { return department; }
-    public void setDepartment(String department) { this.department = department; }
 
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }

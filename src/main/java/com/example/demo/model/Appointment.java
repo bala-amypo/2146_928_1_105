@@ -20,12 +20,11 @@ public class Appointment {
     private Host host;
 
     private LocalDate appointmentDate;
-
     private String purpose;
 
-    private String status = "SCHEDULED";
+    // ❗ MUST be null initially (tests expect this)
+    private String status;
 
-    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

@@ -12,11 +12,9 @@ public class VisitLog {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "visitor_id")
     private Visitor visitor;
 
     @ManyToOne
-    @JoinColumn(name = "host_id")
     private Host host;
 
     private LocalDateTime checkInTime;
@@ -33,7 +31,6 @@ public class VisitLog {
         this.checkInTime = LocalDateTime.now();
     }
 
-    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -57,9 +54,4 @@ public class VisitLog {
 
     public Boolean getAlertSent() { return alertSent; }
     public void setAlertSent(Boolean alertSent) { this.alertSent = alertSent; }
-
-    public AlertNotification getAlertNotification() { return alertNotification; }
-    public void setAlertNotification(AlertNotification alertNotification) {
-        this.alertNotification = alertNotification;
-    }
 }
