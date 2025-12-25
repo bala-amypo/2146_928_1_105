@@ -61,7 +61,7 @@
             <version>2.5.0</version>
         </dependency>
 
-        <!-- ✅ JWT (SINGLE JAR – CORRECT) -->
+        <!-- ✅ JWT (CORRECT for platform tests) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -87,10 +87,22 @@
 
     <build>
         <plugins>
+
+            <!-- 🔥 VERY IMPORTANT: FORCE TEST DISCOVERY -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
         </plugins>
     </build>
 
