@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/alerts")
+@RequestMapping("/api")
 @Tag(name = "Alerts", description = "Alert notification APIs")
 public class AlertNotificationController {
 
