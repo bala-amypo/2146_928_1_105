@@ -68,7 +68,7 @@
             <version>0.9.1</version>
         </dependency>
 
-        <!-- ✅ TestNG (hidden tests use this) -->
+        <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -76,13 +76,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Spring Test utilities (Mockito, ReflectionTestUtils) -->
+        <!-- Spring Test utilities -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
             <exclusions>
-                <!-- ❌ Prevent JUnit from hijacking Surefire -->
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
@@ -99,13 +98,18 @@
     <build>
         <plugins>
 
-            <!-- ✅ HIDDEN-TEST SAFE: AUTO-DETECT TESTNG -->
+            <!-- Force TestNG provider -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
                     <useModulePath>false</useModulePath>
+                    <providers>
+                        <provider>
+                            <name>testng</name>
+                        </provider>
+                    </providers>
                 </configuration>
             </plugin>
 
