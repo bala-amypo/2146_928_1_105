@@ -3,6 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.model.Host;
 import com.example.demo.service.HostService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,17 +22,18 @@ public class HostController {
     }
 
     @PostMapping
-    public Host createHost(@RequestBody Host host) {
-        return hostService.createHost(host);
+    public ResponseEntity<Host> createHost(@Valid @RequestBody Host host) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(hostService.createHost(host));
     }
 
     @GetMapping
-    public List<Host> getAllHosts() {
-        return hostService.getAllHosts();
+    public ResponseEntity<List<Host>> getAllHosts() {
+        return ResponseEntity.ok(hostService.getAllHosts());
     }
 
     @GetMapping("/{id}")
-    public Host getHost(@PathVariable Long id) {
-        return hostService.getHost(id);
+    public ResponseEntity<Host> getHost(@PathVariable Long id) {
+        return ResponseEntity.ok(hostService.getHost(id));
     }
 }

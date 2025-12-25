@@ -4,6 +4,8 @@ import com.example.demo.model.Visitor;
 import com.example.demo.service.VisitorService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/visitors")
 @Tag(name = "Visitors", description = "Visitor management APIs")
-@CrossOrigin // ✅ REQUIRED for Swagger + proxy
+@CrossOrigin
 public class VisitorController {
 
     private final VisitorService visitorService;
@@ -21,17 +23,18 @@ public class VisitorController {
     }
 
     @PostMapping
-    public Visitor createVisitor(@Valid @RequestBody Visitor visitor) {
-        return visitorService.createVisitor(visitor);
+    public ResponseEntity<Visitor> createVisitor(@Valid @RequestBody Visitor visitor) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(visitorService.createVisitor(visitor));
     }
 
     @GetMapping
-    public List<Visitor> getAllVisitors() {
-        return visitorService.getAllVisitors();
+    public ResponseEntity<List<Visitor>> getAllVisitors() {
+        return ResponseEntity.ok(visitorService.getAllVisitors());
     }
 
     @GetMapping("/{id}")
-    public Visitor getVisitor(@PathVariable Long id) {
-        return visitorService.getVisitor(id);
+    public ResponseEntity<Visitor> getVisitor(@PathVariable Long id) {
+        return ResponseEntity.ok(visitorService.getVisitor(id));
     }
 }

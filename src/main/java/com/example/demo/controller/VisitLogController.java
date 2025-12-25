@@ -1,8 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CheckInRequest;
 import com.example.demo.model.VisitLog;
 import com.example.demo.service.VisitLogService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,26 +23,27 @@ public class VisitLogController {
     }
 
     @PostMapping("/checkin/{visitorId}/{hostId}")
-    public VisitLog checkInVisitor(
+    public ResponseEntity<VisitLog> checkInVisitor(
             @PathVariable Long visitorId,
             @PathVariable Long hostId,
-            @RequestBody String purpose) {
+            @Valid @RequestBody CheckInRequest request) {
 
-        return visitLogService.checkInVisitor(visitorId, hostId, purpose);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(visitLogService.checkInVisitor(visitorId, hostId, request.getPurpose()));
     }
 
     @PostMapping("/checkout/{visitLogId}")
-    public VisitLog checkOutVisitor(@PathVariable Long visitLogId) {
-        return visitLogService.checkOutVisitor(visitLogId);
+    public ResponseEntity<VisitLog> checkOutVisitor(@PathVariable Long visitLogId) {
+        return ResponseEntity.ok(visitLogService.checkOutVisitor(visitLogId));
     }
 
     @GetMapping("/active")
-    public List<VisitLog> getActiveVisits() {
-        return visitLogService.getActiveVisits();
+    public ResponseEntity<List<VisitLog>> getActiveVisits() {
+        return ResponseEntity.ok(visitLogService.getActiveVisits());
     }
 
     @GetMapping("/{id}")
-    public VisitLog getVisitLog(@PathVariable Long id) {
-        return visitLogService.getVisitLog(id);
+    public ResponseEntity<VisitLog> getVisitLog(@PathVariable Long id) {
+        return ResponseEntity.ok(visitLogService.getVisitLog(id));
     }
 }
