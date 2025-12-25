@@ -61,11 +61,26 @@
             <version>2.5.0</version>
         </dependency>
 
-        <!-- ✅ JWT (CORRECT for platform tests) -->
+        <!-- JWT (platform compatible) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
+        </dependency>
+
+        <!-- ✅ JUnit 4 (REQUIRED) -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ✅ JUnit 5 Engine (REQUIRED) -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- TestNG -->
@@ -88,7 +103,7 @@
     <build>
         <plugins>
 
-            <!-- 🔥 VERY IMPORTANT: FORCE TEST DISCOVERY -->
+            <!-- ✅ FORCE TEST DISCOVERY -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
