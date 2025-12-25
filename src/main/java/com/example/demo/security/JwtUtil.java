@@ -1,6 +1,7 @@
 package com.example.demo.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -8,15 +9,10 @@ import java.util.Date;
 
 public class JwtUtil {
 
-    // ✅ Hardcoded secret (tests expect this style)
     private static final String SECRET_KEY = "secret-key-demo";
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 1 day
 
-    // 1 day validity
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
-
-    /**
-     * ✅ REQUIRED BY TESTS
-     */
+    // ✅ EXACT SIGNATURE REQUIRED BY TESTS
     public String generateToken(String email, String role, long userId, String username) {
 
         return Jwts.builder()
@@ -30,14 +26,11 @@ public class JwtUtil {
                 .compact();
     }
 
-    /**
-     * ✅ REQUIRED BY TESTS
-     */
-    public Claims validateAndGetClaims(String token) {
+    // ✅ MUST RETURN Jws<Claims>, NOT Claims
+    public Jws<Claims> validateAndGetClaims(String token) {
 
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
-                .getBody();
+                .parseClaimsJws(token);
     }
 }
