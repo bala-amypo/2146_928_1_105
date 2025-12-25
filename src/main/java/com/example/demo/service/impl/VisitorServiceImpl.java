@@ -1,39 +1,26 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.Visitor;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.VisitorRepository;
-import com.example.demo.service.VisitorService;
-import org.springframework.stereotype.Service;
+import java.util.*;
 
-import java.util.List;
-
-@Service
-public class VisitorServiceImpl implements VisitorService {
+public class VisitorServiceImpl {
 
     private VisitorRepository visitorRepository;
 
-    // ✅ No-arg constructor (REQUIRED FOR TESTS)
-    public VisitorServiceImpl() {
+    public VisitorServiceImpl(VisitorRepository repo) {
+        this.visitorRepository = repo;
     }
 
-    // ✅ Constructor for Spring
-    public VisitorServiceImpl(VisitorRepository visitorRepository) {
-        this.visitorRepository = visitorRepository;
+    public Visitor createVisitor(Visitor v) {
+        return visitorRepository.save(v);
     }
 
-    @Override
-    public Visitor createVisitor(Visitor visitor) {
-        return visitorRepository.save(visitor);
-    }
-
-    @Override
     public Visitor getVisitor(Long id) {
         return visitorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Visitor not found"));
+                .orElseThrow(() -> new RuntimeException("Visitor not found"));
     }
 
-    @Override
     public List<Visitor> getAllVisitors() {
         return visitorRepository.findAll();
     }

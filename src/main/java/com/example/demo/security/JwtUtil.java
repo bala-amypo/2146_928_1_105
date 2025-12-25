@@ -1,31 +1,30 @@
 package com.example.demo.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-
+import io.jsonwebtoken.*;
 import java.util.Date;
 
 public class JwtUtil {
 
-    private static final String SECRET = "secret-key-for-tests";
+    private String secret;
+    private long jwtExpirationMs;
 
-    public String generateToken(String email, String role, long userId, String username) {
+    public String generateToken(String username, String role, Long userId, String email) {
+
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(username)
                 .claim("role", role)
                 .claim("userId", userId)
-                .claim("username", username)
+                .claim("email", email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
-                .signWith(SignatureAlgorithm.HS256, SECRET)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public Claims validateAndGetClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET)
-                .parseClaimsJws(token)
-                .getBody();
+    public Jws<Claims> validateAndGetClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token);
     }
 }
