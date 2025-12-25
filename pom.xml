@@ -68,7 +68,7 @@
             <version>0.9.1</version>
         </dependency>
 
-        <!-- TestNG -->
+        <!-- ✅ ONLY TEST FRAMEWORK: TESTNG -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -76,21 +76,17 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Spring Test utilities -->
+        <!-- Mockito + Spring utilities WITHOUT JUnit -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.junit.jupiter</groupId>
-                    <artifactId>junit-jupiter</artifactId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -98,18 +94,13 @@
     <build>
         <plugins>
 
-            <!-- Force TestNG provider -->
+            <!-- FORCE TESTNG (NO JUNIT PRESENT ANYMORE) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
                     <useModulePath>false</useModulePath>
-                    <providers>
-                        <provider>
-                            <name>testng</name>
-                        </provider>
-                    </providers>
                 </configuration>
             </plugin>
 
