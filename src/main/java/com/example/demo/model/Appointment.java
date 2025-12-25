@@ -1,29 +1,16 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "appointments")
 public class Appointment {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "visitor_id")
     private Visitor visitor;
-
-    @ManyToOne
-    @JoinColumn(name = "host_id")
     private Host host;
-
     private LocalDate appointmentDate;
     private String purpose;
-
-    // ❗ MUST be null initially (tests expect this)
     private String status;
+
+    public Appointment() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

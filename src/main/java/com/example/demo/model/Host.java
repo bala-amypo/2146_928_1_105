@@ -1,45 +1,12 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-@Entity
-@Table(name = "hosts", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Host {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank
     private String hostName;
-
-    @Email
-    @NotBlank
     private String email;
-
-    @NotBlank
     private String phone;
 
-    private LocalDateTime createdAt;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "host")
-    private List<Appointment> appointments;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "host")
-    private List<VisitLog> visitLogs;
-
-    @PrePersist
-    public void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
+    public Host() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -52,6 +19,4 @@ public class Host {
 
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
 }
