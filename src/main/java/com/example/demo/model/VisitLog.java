@@ -19,17 +19,81 @@ public class VisitLog {
 
     private LocalDateTime checkInTime;
 
+    private LocalDateTime checkOutTime;
+
+    private String purpose;
+
+    private Boolean accessGranted;
+
+    private Boolean alertSent = false;
+
     public VisitLog() {}
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public Visitor getVisitor() { return visitor; }
-    public void setVisitor(Visitor visitor) { this.visitor = visitor; }
+    public Visitor getVisitor() {
+        return visitor;
+    }
 
-    public Host getHost() { return host; }
-    public void setHost(Host host) { this.host = host; }
+    public void setVisitor(Visitor visitor) {
+        this.visitor = visitor;
+    }
 
-    public LocalDateTime getCheckInTime() { return checkInTime; }
-    public void setCheckInTime(LocalDateTime checkInTime) { this.checkInTime = checkInTime; }
+    public Host getHost() {
+        return host;
+    }
+
+    public void setHost(Host host) {
+        this.host = host;
+    }
+
+    public LocalDateTime getCheckInTime() {
+        return checkInTime;
+    }
+
+    public void setCheckInTime(LocalDateTime checkInTime) {
+        this.checkInTime = checkInTime;
+    }
+
+    public LocalDateTime getCheckOutTime() {
+        return checkOutTime;
+    }
+
+    // ✅ REQUIRED BY SERVICE
+    public void setCheckOutTime(LocalDateTime checkOutTime) {
+        this.checkOutTime = checkOutTime;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public Boolean getAccessGranted() {
+        return accessGranted;
+    }
+
+    // ✅ REQUIRED BY SERVICE
+    public void setAccessGranted(Boolean accessGranted) {
+        this.accessGranted = accessGranted;
+    }
+
+    public Boolean getAlertSent() {
+        return alertSent;
+    }
+
+    public void setAlertSent(Boolean alertSent) {
+        this.alertSent = alertSent;
+    }
+
+    @PrePersist
+    public void onCheckIn() {
+        this.checkInTime = LocalDateTime.now();
+        this.alertSent = false;
+    }
 }
