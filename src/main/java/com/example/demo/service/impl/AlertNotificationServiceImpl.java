@@ -47,7 +47,6 @@ public class AlertNotificationServiceImpl implements AlertNotificationService {
         alert.setSentTo(log.getHost().getEmail());
         alert.setAlertMessage("Visitor arrived");
         alert.setSentAt(LocalDateTime.now());
-        alert.setSent(true);
 
         return alertRepository.save(alert);
     }

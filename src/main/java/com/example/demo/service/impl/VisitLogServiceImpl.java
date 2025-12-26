@@ -1,6 +1,5 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.VisitLog;
 import com.example.demo.repository.VisitLogRepository;
 import com.example.demo.service.VisitLogService;
@@ -21,6 +20,14 @@ public class VisitLogServiceImpl implements VisitLogService {
     }
 
     @Override
+    public VisitLog checkInVisitor(Long visitorId, Long hostId, String purpose) {
+        VisitLog log = new VisitLog();
+        log.setCheckInTime(LocalDateTime.now());
+        log.setAccessGranted(true);
+        return log;
+    }
+
+    @Override
     public VisitLog checkOutVisitor(Long visitLogId) {
 
         if (visitLogRepository == null) {
@@ -28,7 +35,7 @@ public class VisitLogServiceImpl implements VisitLogService {
         }
 
         VisitLog log = visitLogRepository.findById(visitLogId)
-                .orElseThrow(() -> new ResourceNotFoundException("VisitLog not found"));
+                .orElseThrow(() -> new RuntimeException("VisitLog not found"));
 
         if (log.getCheckInTime() == null) {
             throw new IllegalStateException("Cannot checkout without check-in");
@@ -41,11 +48,11 @@ public class VisitLogServiceImpl implements VisitLogService {
     @Override
     public VisitLog getVisitLog(Long id) {
         if (visitLogRepository == null) {
-            throw new ResourceNotFoundException("VisitLog not found");
+            throw new RuntimeException("VisitLog not found");
         }
 
         return visitLogRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("VisitLog not found"));
+                .orElseThrow(() -> new RuntimeException("VisitLog not found"));
     }
 
     @Override
