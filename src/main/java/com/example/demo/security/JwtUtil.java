@@ -1,20 +1,18 @@
 package com.example.demo.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component   // ✅ THIS IS THE FIX
 public class JwtUtil {
 
-    // These are injected via ReflectionTestUtils in tests
-    private String secret;
-    private long jwtExpirationMs;
+    public String secret = "verySecretKeyThatIsAtLeast32CharactersLong!";
+    public Long jwtExpirationMs = 86400000L;
 
     public String generateToken(String username, String role, Long userId, String email) {
-
         return Jwts.builder()
                 .setSubject(username)
                 .claim("role", role)
@@ -27,9 +25,16 @@ public class JwtUtil {
     }
 
     public Jws<Claims> validateAndGetClaims(String token) {
-
         return Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token);
+    }
+
+    public String getTokenFromRequest(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        if (header != null && header.startsWith("Bearer ")) {
+            return header.substring(7);
+        }
+        return null;
     }
 }
