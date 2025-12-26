@@ -1,40 +1,73 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.Host;
 import com.example.demo.model.VisitLog;
+import com.example.demo.model.Visitor;
+import com.example.demo.repository.HostRepository;
+import com.example.demo.repository.VisitLogRepository;
+import com.example.demo.repository.VisitorRepository;
 import com.example.demo.service.VisitLogService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class VisitLogServiceImpl implements VisitLogService {
 
-    public VisitLogServiceImpl() {}
+    private final VisitLogRepository visitLogRepository;
+    private final VisitorRepository visitorRepository;
+    private final HostRepository hostRepository;
+
+    public VisitLogServiceImpl(
+            VisitLogRepository visitLogRepository,
+            VisitorRepository visitorRepository,
+            HostRepository hostRepository
+    ) {
+        this.visitLogRepository = visitLogRepository;
+        this.visitorRepository = visitorRepository;
+        this.hostRepository = hostRepository;
+    }
 
     @Override
     public VisitLog checkInVisitor(Long visitorId, Long hostId, String purpose) {
+
+        Visitor visitor = visitorRepository.findById(visitorId)
+                .orElseThrow(() -> new RuntimeException("Visitor not found"));
+
+        Host host = hostRepository.findById(hostId)
+                .orElseThrow(() -> new RuntimeException("Host not found"));
+
         VisitLog log = new VisitLog();
-        log.setAccessGranted(true);
+        log.setVisitor(visitor);
+        log.setHost(host);
         log.setCheckInTime(LocalDateTime.now());
-        return log;
+        log.setAccessGranted(true);
+
+        // purpose is optional — controller expects it, tests may send it
+        // If VisitLog later adds purpose, this stays compatible
+
+        return visitLogRepository.save(log);
     }
 
     @Override
     public VisitLog checkOutVisitor(Long visitLogId) {
-        VisitLog log = new VisitLog();
+
+        VisitLog log = visitLogRepository.findById(visitLogId)
+                .orElseThrow(() -> new RuntimeException("VisitLog not found"));
+
         log.setCheckOutTime(LocalDateTime.now());
-        return log;
+        return visitLogRepository.save(log);
     }
 
     @Override
     public VisitLog getVisitLog(Long id) {
-        return new VisitLog();
+        return visitLogRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("VisitLog not found"));
     }
 
     @Override
     public List<VisitLog> getActiveVisits() {
-        return new ArrayList<>();
+        return visitLogRepository.findByCheckOutTimeIsNull();
     }
 }
