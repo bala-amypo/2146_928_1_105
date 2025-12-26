@@ -1,8 +1,15 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
     private String email;
     private String password;
@@ -10,15 +17,17 @@ public class User {
 
     public User() {}
 
+    // 🔥 REQUIRED BY TESTS
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {   // 🔥 REQUIRED BY TESTS
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getUsername() {  // 🔥 REQUIRED
+    // 🔥 REQUIRED BY AuthController & tests
+    public String getUsername() {
         return username;
     }
 
@@ -34,7 +43,8 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {  // 🔥 REQUIRED
+    // 🔥 REQUIRED
+    public String getPassword() {
         return password;
     }
 
@@ -42,7 +52,8 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {       // 🔥 REQUIRED
+    // 🔥 REQUIRED
+    public String getRole() {
         return role;
     }
 
