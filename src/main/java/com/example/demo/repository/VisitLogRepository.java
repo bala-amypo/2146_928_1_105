@@ -1,10 +1,10 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.VisitLog;
-import java.util.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-public interface VisitLogRepository {
-    VisitLog save(VisitLog v);
-    Optional<VisitLog> findById(Long id);
+public interface VisitLogRepository extends JpaRepository<VisitLog, Long> {
+
     List<VisitLog> findByCheckOutTimeIsNull();
 }
