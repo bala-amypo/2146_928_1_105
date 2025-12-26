@@ -1,12 +1,14 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.Appointment;
-import java.util.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AppointmentRepository {
-    Appointment save(Appointment a);
-    Optional<Appointment> findById(Long id);
-    List<Appointment> findAll();
+import java.util.List;
+
+public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+
+    // used by AppointmentServiceImpl
     List<Appointment> findByHostId(Long hostId);
+
     List<Appointment> findByVisitorId(Long visitorId);
 }
