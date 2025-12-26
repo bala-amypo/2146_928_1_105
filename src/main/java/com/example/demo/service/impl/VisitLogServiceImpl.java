@@ -20,11 +20,11 @@ public class VisitLogServiceImpl implements VisitLogService {
     private VisitorRepository visitorRepository;
     private HostRepository hostRepository;
 
-    // ✅ REQUIRED for hidden tests (they call new VisitLogServiceImpl())
+    // ✅ REQUIRED by hidden tests (they use new VisitLogServiceImpl())
     public VisitLogServiceImpl() {
     }
 
-    // ✅ REQUIRED for Spring Boot
+    // ✅ REQUIRED by Spring Boot
     public VisitLogServiceImpl(
             VisitLogRepository visitLogRepository,
             VisitorRepository visitorRepository,
