@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Visitor;
+import com.example.demo.entimodelty.Visitor;
 import com.example.demo.service.VisitorService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
