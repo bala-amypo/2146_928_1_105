@@ -2,25 +2,34 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.Visitor;
 import com.example.demo.repository.VisitorRepository;
-import java.util.*;
+import com.example.demo.service.VisitorService;
+import org.springframework.stereotype.Service;
 
-public class VisitorServiceImpl {
+import java.time.LocalDateTime;
+import java.util.List;
 
-    private VisitorRepository visitorRepository;
+@Service
+public class VisitorServiceImpl implements VisitorService {
 
-    public VisitorServiceImpl(VisitorRepository repo) {
-        this.visitorRepository = repo;
+    private final VisitorRepository visitorRepository;
+
+    public VisitorServiceImpl(VisitorRepository visitorRepository) {
+        this.visitorRepository = visitorRepository;
     }
 
-    public Visitor createVisitor(Visitor v) {
-        return visitorRepository.save(v);
+    @Override
+    public Visitor createVisitor(Visitor visitor) {
+        visitor.setCreatedAt(LocalDateTime.now());
+        return visitorRepository.save(visitor);
     }
 
+    @Override
     public Visitor getVisitor(Long id) {
         return visitorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Visitor not found"));
     }
 
+    @Override
     public List<Visitor> getAllVisitors() {
         return visitorRepository.findAll();
     }
