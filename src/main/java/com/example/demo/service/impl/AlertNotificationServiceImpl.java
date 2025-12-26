@@ -16,7 +16,7 @@ public class AlertNotificationServiceImpl implements AlertNotificationService {
     private final AlertNotificationRepository alertRepository;
     private final VisitLogRepository visitLogRepository;
 
-    // ✅ Constructor injection (Spring-required, test-safe)
+    // Constructor injection (required for Spring & used safely by tests)
     public AlertNotificationServiceImpl(
             AlertNotificationRepository alertRepository,
             VisitLogRepository visitLogRepository
