@@ -16,7 +16,7 @@ public class HostServiceImpl implements HostService {
     public HostServiceImpl() {
     }
 
-    // ✅ REQUIRED by Spring
+    // ✅ REQUIRED by Spring Boot (constructor injection)
     public HostServiceImpl(HostRepository hostRepository) {
         this.hostRepository = hostRepository;
     }
@@ -24,7 +24,7 @@ public class HostServiceImpl implements HostService {
     @Override
     public Host createHost(Host host) {
 
-        // ✅ TEST MODE
+        // ✅ TEST MODE (no repository)
         if (hostRepository == null) {
             return host;
         }
