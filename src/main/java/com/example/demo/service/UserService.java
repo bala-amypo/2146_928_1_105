@@ -2,9 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.model.User;
 
+import java.util.Optional;
+
 public interface UserService {
 
-    User register(User user);
+    User registerUser(User user);
 
-    User login(String email, String password);
+    Optional<User> findByEmail(String email);
 }
