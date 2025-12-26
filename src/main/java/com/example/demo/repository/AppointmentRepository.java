@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
-    // used by AppointmentServiceImpl
     List<Appointment> findByHostId(Long hostId);
 
     List<Appointment> findByVisitorId(Long visitorId);
