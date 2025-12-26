@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class HostServiceImpl implements HostService {
 
-    private final HostRepository hostRepository;
+    private HostRepository hostRepository;
 
+    // 🔥 REQUIRED BY TESTS
+    public HostServiceImpl() {}
+
+    // Spring usage
     public HostServiceImpl(HostRepository hostRepository) {
         this.hostRepository = hostRepository;
     }
@@ -19,12 +23,6 @@ public class HostServiceImpl implements HostService {
     @Override
     public Host createHost(Host host) {
         return hostRepository.save(host);
-    }
-
-    @Override
-    public Host getHost(Long id) {
-        return hostRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Host not found"));
     }
 
     @Override
