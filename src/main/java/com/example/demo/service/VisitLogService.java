@@ -1,14 +1,14 @@
 package com.example.demo.service;
 
 import com.example.demo.model.VisitLog;
-
 import java.util.List;
 
 public interface VisitLogService {
 
-    VisitLog checkIn(Long visitorId, Long hostId);
+    // 🔧 MUST match VisitLogController
+    VisitLog checkInVisitor(Long visitorId, Long hostId, String purpose);
 
-    VisitLog checkOut(Long visitLogId);
+    VisitLog checkOutVisitor(Long visitLogId);
 
     VisitLog getVisitLog(Long id);
 
