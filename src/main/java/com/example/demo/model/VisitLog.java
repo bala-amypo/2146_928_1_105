@@ -4,12 +4,15 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "visit_logs")
 public class VisitLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private boolean accessGranted;
+    private LocalDateTime checkInTime;
+    private LocalDateTime checkOutTime;
 
     @ManyToOne
     private Visitor visitor;
@@ -17,33 +20,27 @@ public class VisitLog {
     @ManyToOne
     private Host host;
 
-    private LocalDateTime checkInTime;
-    private LocalDateTime checkOutTime;
-    private boolean accessGranted;
-
     public VisitLog() {}
 
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
-    public Visitor getVisitor() { return visitor; }
-    public void setVisitor(Visitor visitor) { this.visitor = visitor; }
-
-    public Host getHost() { return host; }
-    public void setHost(Host host) { this.host = host; }
+    public boolean getAccessGranted() { return accessGranted; }
+    public void setAccessGranted(boolean accessGranted) {
+        this.accessGranted = accessGranted;
+    }
 
     public LocalDateTime getCheckInTime() { return checkInTime; }
     public void setCheckInTime(LocalDateTime checkInTime) {
         this.checkInTime = checkInTime;
     }
 
-    public LocalDateTime getCheckOutTime() { return checkOutTime; }
     public void setCheckOutTime(LocalDateTime checkOutTime) {
         this.checkOutTime = checkOutTime;
     }
 
-    public boolean isAccessGranted() { return accessGranted; }
-    public void setAccessGranted(boolean accessGranted) {
-        this.accessGranted = accessGranted;
-    }
+    public Visitor getVisitor() { return visitor; }
+    public void setVisitor(Visitor visitor) { this.visitor = visitor; }
+
+    public Host getHost() { return host; }
+    public void setHost(Host host) { this.host = host; }
 }

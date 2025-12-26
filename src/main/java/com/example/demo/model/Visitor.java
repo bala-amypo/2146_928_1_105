@@ -1,10 +1,8 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "visitors")
 public class Visitor {
 
     @Id
@@ -14,8 +12,6 @@ public class Visitor {
     private String fullName;
     private String email;
     private String phone;
-    private String idProofNumber;
-    private LocalDateTime createdAt;
 
     public Visitor() {}
 
@@ -30,10 +26,4 @@ public class Visitor {
 
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
-
-    public String getIdProofNumber() { return idProofNumber; }
-    public void setIdProofNumber(String idProofNumber) { this.idProofNumber = idProofNumber; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
