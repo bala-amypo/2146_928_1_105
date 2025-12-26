@@ -12,13 +12,10 @@ public class AlertNotification {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "visit_log_id", unique = true)
     private VisitLog visitLog;
 
     private String sentTo;
-
     private String alertMessage;
-
     private LocalDateTime sentAt;
 
     public AlertNotification() {}

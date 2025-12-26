@@ -11,20 +11,14 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "visitor_id")
+    @ManyToOne
     private Visitor visitor;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "host_id")
+    @ManyToOne
     private Host host;
 
-    @Column(nullable = false)
     private LocalDate appointmentDate;
-
     private String purpose;
-
-    @Column(nullable = false)
     private String status;
 
     public Appointment() {}
@@ -39,9 +33,7 @@ public class Appointment {
     public void setHost(Host host) { this.host = host; }
 
     public LocalDate getAppointmentDate() { return appointmentDate; }
-    public void setAppointmentDate(LocalDate appointmentDate) {
-        this.appointmentDate = appointmentDate;
-    }
+    public void setAppointmentDate(LocalDate appointmentDate) { this.appointmentDate = appointmentDate; }
 
     public String getPurpose() { return purpose; }
     public void setPurpose(String purpose) { this.purpose = purpose; }
