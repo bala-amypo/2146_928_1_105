@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.Appointment;
+import com.example.demo.model.Host;
+import com.example.demo.model.Visitor;
 import com.example.demo.repository.AppointmentRepository;
 import com.example.demo.repository.HostRepository;
 import com.example.demo.repository.VisitorRepository;
@@ -17,10 +19,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     private VisitorRepository visitorRepository;
     private HostRepository hostRepository;
 
-    // Required by tests
-    public AppointmentServiceImpl() {}
+    // Required by tests (default constructor)
+    public AppointmentServiceImpl() {
+    }
 
-    // Required by Spring
+    // Required by Spring / tests with constructor injection
     public AppointmentServiceImpl(
             AppointmentRepository appointmentRepository,
             VisitorRepository visitorRepository,
@@ -34,50 +37,52 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment createAppointment(Long visitorId, Long hostId, Appointment appointment) {
 
-        // ❌ past date check (TEST 010)
-        if (appointment.getAppointmentDate() != null &&
-            appointment.getAppointmentDate().isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("Appointment date cannot be in the past");
+        // ✅ NULL date protection
+        if (appointment.getAppointmentDate() == null) {
+            throw new IllegalArgumentException("appointmentDate cannot be null");
         }
 
-        // ✅ default status (TEST 038)
+        // ✅ TEST 010: exact error message required
+        if (appointment.getAppointmentDate().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("appointmentDate cannot be past");
+        }
+
+        // ✅ Visitor lookup
+        Visitor visitor = visitorRepository.findById(visitorId)
+                .orElseThrow(() -> new RuntimeException("Visitor not found"));
+
+        // ✅ Host lookup
+        Host host = hostRepository.findById(hostId)
+                .orElseThrow(() -> new RuntimeException("Host not found"));
+
+        appointment.setVisitor(visitor);
+        appointment.setHost(host);
+
+        // ✅ TEST 038: default status
         if (appointment.getStatus() == null) {
             appointment.setStatus("SCHEDULED");
         }
-
-        // TEST MODE
-        if (appointmentRepository == null) {
-            return appointment;
-        }
-
-        appointment.setVisitor(
-                visitorRepository.findById(visitorId)
-                        .orElseThrow(() -> new RuntimeException("Visitor not found"))
-        );
-
-        appointment.setHost(
-                hostRepository.findById(hostId)
-                        .orElseThrow(() -> new RuntimeException("Host not found"))
-        );
 
         return appointmentRepository.save(appointment);
     }
 
     @Override
     public Appointment getAppointment(Long id) {
-        if (appointmentRepository == null) return null;
-        return appointmentRepository.findById(id).orElse(null);
+
+        // ✅ TEST 032: must throw exception, not return null
+        return appointmentRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Appointment not found")
+                );
     }
 
     @Override
     public List<Appointment> getAppointmentsForHost(Long hostId) {
-        if (appointmentRepository == null) return List.of();
         return appointmentRepository.findByHostId(hostId);
     }
 
     @Override
     public List<Appointment> getAppointmentsForVisitor(Long visitorId) {
-        if (appointmentRepository == null) return List.of();
         return appointmentRepository.findByVisitorId(visitorId);
     }
 }
