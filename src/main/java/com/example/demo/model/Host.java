@@ -18,6 +18,7 @@ public class Host {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
+    // 🔥 REQUIRED BY TESTS
     public String getHostName() { return hostName; }
     public void setHostName(String hostName) { this.hostName = hostName; }
 

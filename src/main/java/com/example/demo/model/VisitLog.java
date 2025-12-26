@@ -10,37 +10,34 @@ public class VisitLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private boolean accessGranted;
-    private LocalDateTime checkInTime;
-    private LocalDateTime checkOutTime;
-
     @ManyToOne
     private Visitor visitor;
 
     @ManyToOne
     private Host host;
 
+    private LocalDateTime checkInTime;
+    private LocalDateTime checkOutTime;
+    private Boolean accessGranted;
+
     public VisitLog() {}
 
+    // 🔥 REQUIRED BY TESTS
     public Long getId() { return id; }
-
-    public boolean getAccessGranted() { return accessGranted; }
-    public void setAccessGranted(boolean accessGranted) {
-        this.accessGranted = accessGranted;
-    }
-
-    public LocalDateTime getCheckInTime() { return checkInTime; }
-    public void setCheckInTime(LocalDateTime checkInTime) {
-        this.checkInTime = checkInTime;
-    }
-
-    public void setCheckOutTime(LocalDateTime checkOutTime) {
-        this.checkOutTime = checkOutTime;
-    }
+    public void setId(Long id) { this.id = id; }
 
     public Visitor getVisitor() { return visitor; }
     public void setVisitor(Visitor visitor) { this.visitor = visitor; }
 
     public Host getHost() { return host; }
     public void setHost(Host host) { this.host = host; }
+
+    public LocalDateTime getCheckInTime() { return checkInTime; }
+    public void setCheckInTime(LocalDateTime checkInTime) { this.checkInTime = checkInTime; }
+
+    public LocalDateTime getCheckOutTime() { return checkOutTime; }
+    public void setCheckOutTime(LocalDateTime checkOutTime) { this.checkOutTime = checkOutTime; }
+
+    public Boolean getAccessGranted() { return accessGranted; }
+    public void setAccessGranted(Boolean accessGranted) { this.accessGranted = accessGranted; }
 }

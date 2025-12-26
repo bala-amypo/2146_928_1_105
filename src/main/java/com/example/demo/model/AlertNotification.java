@@ -19,7 +19,9 @@ public class AlertNotification {
 
     public AlertNotification() {}
 
+    // 🔥 REQUIRED
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public VisitLog getVisitLog() { return visitLog; }
     public void setVisitLog(VisitLog visitLog) { this.visitLog = visitLog; }
@@ -30,5 +32,6 @@ public class AlertNotification {
     public String getAlertMessage() { return alertMessage; }
     public void setAlertMessage(String alertMessage) { this.alertMessage = alertMessage; }
 
+    public LocalDateTime getSentAt() { return sentAt; }
     public void setSentAt(LocalDateTime sentAt) { this.sentAt = sentAt; }
 }
