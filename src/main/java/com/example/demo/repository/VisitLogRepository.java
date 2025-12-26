@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface VisitLogRepository extends JpaRepository<VisitLog, Long> {
 
-    // ✅ REQUIRED BY VisitLogServiceImpl
     List<VisitLog> findByCheckOutTimeIsNull();
 }
