@@ -1,77 +1,51 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "appointments")
 public class Appointment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "visitor_id")
     private Visitor visitor;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "host_id")
     private Host host;
+
+    @Column(nullable = false)
     private LocalDate appointmentDate;
 
-    // ✅ REQUIRED by service/controller
-    private LocalDateTime appointmentTime;
-
     private String purpose;
+
+    @Column(nullable = false)
     private String status;
 
     public Appointment() {}
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Visitor getVisitor() { return visitor; }
+    public void setVisitor(Visitor visitor) { this.visitor = visitor; }
 
-    public Visitor getVisitor() {
-        return visitor;
-    }
+    public Host getHost() { return host; }
+    public void setHost(Host host) { this.host = host; }
 
-    public void setVisitor(Visitor visitor) {
-        this.visitor = visitor;
-    }
-
-    public Host getHost() {
-        return host;
-    }
-
-    public void setHost(Host host) {
-        this.host = host;
-    }
-
-    public LocalDate getAppointmentDate() {
-        return appointmentDate;
-    }
-
+    public LocalDate getAppointmentDate() { return appointmentDate; }
     public void setAppointmentDate(LocalDate appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
 
-    // ✅ FIX ADDED (this was missing)
-    public LocalDateTime getAppointmentTime() {
-        return appointmentTime;
-    }
+    public String getPurpose() { return purpose; }
+    public void setPurpose(String purpose) { this.purpose = purpose; }
 
-    public void setAppointmentTime(LocalDateTime appointmentTime) {
-        this.appointmentTime = appointmentTime;
-    }
-
-    public String getPurpose() {
-        return purpose;
-    }
-
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
