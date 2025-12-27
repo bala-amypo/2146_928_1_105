@@ -13,29 +13,41 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Authentication", description = "User registration and login")
+@CrossOrigin(origins = "*") // ✅ Fix CORS issues
+@Tag(name = "auth", description = "User registration and login")
 public class AuthController {
 
     private final UserService userService;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserService userService, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
+    public AuthController(UserService userService,
+                          JwtUtil jwtUtil,
+                          PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
     }
 
+    // ✅ FIXED REGISTER
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
-        return new ResponseEntity<>(userService.registerUser(user), HttpStatus.CREATED);
+
+        // ✅ Encode password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        User savedUser = userService.registerUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
+    // ✅ LOGIN (already mostly correct)
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+
         User user = userService.findByEmail(request.getEmail());
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (user == null ||
+            !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
