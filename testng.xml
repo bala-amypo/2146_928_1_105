@@ -1,8 +1,0 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Demo Test Suite">
-    <test name="Auth Tests">
-        <classes>
-            <class name="com.example.demo.AuthTests"/>
-        </classes>
-    </test>
-</suite>
