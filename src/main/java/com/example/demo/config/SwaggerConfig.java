@@ -11,23 +11,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-@Bean
-public OpenAPI openAPI() {
-return new OpenAPI()
-.addServersItem(new Server()
-.url("https://9160.408procr.amypo.ai")
-.description("Production Server"))
-.info(new Info()
-.title("Digital Visitor Management API")
-.version("1.0")
-.description("API documentation for Digital Visitor Management System"))
-.addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-.components(new io.swagger.v3.oas.models.Components()
-.addSecuritySchemes("bearerAuth",
-new SecurityScheme()
-.name("bearerAuth")
-.type(SecurityScheme.Type.HTTP)
-.scheme("bearer")
-.bearerFormat("JWT")));
-}
+    @Bean
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                // 🔗 Server URL (important for Swagger UI)
+                .addServersItem(new Server()
+                        .url("https://9160.408procr.amypro.ai")
+                        .description("Production Server"))
+
+                // ℹ️ API Info
+                .info(new Info()
+                        .title("Digital Visitor Management API")
+                        .version("1.0")
+                        .description("API documentation for Digital Visitor Management System"))
+
+                // 🔐 Security
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+                .components(new io.swagger.v3.oas.models.Components()
+                        .addSecuritySchemes("bearerAuth",
+                                new SecurityScheme()
+                                        .name("bearerAuth")
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")));
+    }
 }
