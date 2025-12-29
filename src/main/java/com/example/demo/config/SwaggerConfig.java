@@ -16,7 +16,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 // 🔗 Server URL (important for Swagger UI)
                 .addServersItem(new Server()
-                        .url("https://9160.408procr.amypro.ai")
+                        .url("https://9160.408procr.amypo.ai")
                         .description("Production Server"))
 
                 // ℹ️ API Info
